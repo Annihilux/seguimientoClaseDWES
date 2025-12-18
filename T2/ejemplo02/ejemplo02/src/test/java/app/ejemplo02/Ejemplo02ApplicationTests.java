@@ -1,10 +1,10 @@
-package org.example.funkos.ejemplo01;
+package app.ejemplo02;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Ejemplo01ApplicationTests {
+class Ejemplo02ApplicationTests {
 
     @Test
     void contextLoads() {

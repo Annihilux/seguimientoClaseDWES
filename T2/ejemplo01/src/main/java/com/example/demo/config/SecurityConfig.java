@@ -1,4 +1,4 @@
-package org.example.funkos.ejemplo01.config;
+package com.example.demo.config;
 
 
 import org.springframework.context.annotation.Bean;
@@ -7,35 +7,42 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration // Spring
-@EnableWebSecurity // Spring Security
-@EnableMethodSecurity // @PreAuthorize controladores
+import javax.sql.DataSource;
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/publico/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated()
-
-                ).httpBasic(Customizer.withDefaults()); // Deshabilitar CSRF para facilitar pruebas con Postman
+                )
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
+    }
 
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // DelegatingPasswordEncoder reconoce {bcrypt}, {noop}, etc.
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
-
 }
