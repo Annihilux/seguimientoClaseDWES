@@ -1,0 +1,35 @@
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  font-family: sans-serif;
+}
+.menu {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.menu button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #3498db;
+  background: white;
+  color: #3498db;
+  border-radius: 5px;
+}
+.menu button.active {
+  background: #3498db;
+  color: white;
+}
+.welcome {
+  text-align: center;
+  padding: 20px;
+  background: #d4edda;
+  border-radius: 8px;
+}
+.info {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  text-align: center;
+  margin-top: 20px;
+}

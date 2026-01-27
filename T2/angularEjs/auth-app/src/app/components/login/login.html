@@ -1,0 +1,25 @@
+<div class="card">
+  <h2>Iniciar Sesión</h2>
+
+  <div class="field">
+    <label>Usuario:</label>
+    <input [value]="user()" (input)="user.set($any($event).target.value)" />
+  </div>
+
+  <div class="field">
+    <label>Contraseña:</label>
+    <input
+      type="password"
+      [value]="pass()"
+      (input)="pass.set($any($event).target.value)"
+    />
+  </div>
+
+  <button [disabled]="user().length === 0" (click)="intentarLogin()">
+    Entrar
+  </button>
+
+  @if (error()) {
+  <p class="error-msg">{{ error() }}</p>
+  }
+</div>

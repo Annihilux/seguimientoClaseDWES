@@ -1,0 +1,32 @@
+<div class="container">
+  <nav class="menu">
+    <button (click)="pantalla.set('reg')" [class.active]="pantalla() === 'reg'">
+      Registro
+    </button>
+    <button (click)="pantalla.set('log')" [class.active]="pantalla() === 'log'">
+      Login
+    </button>
+  </nav>
+
+  <hr />
+
+  @if (sesionIniciada()) {
+  <div class="welcome">
+    <h1>¡Bienvenido, {{ registradoUser() }}!</h1>
+    <p>Has accedido correctamente al sistema.</p>
+    <button (click)="sesionIniciada.set(false)">Cerrar Sesión</button>
+  </div>
+  } @else { @switch (pantalla()) { @case ('reg') {
+  <app-register (onRegister)="guardarDatos($event)" />
+  } @case ('log') {
+  <app-login
+    [regUser]="registradoUser()"
+    [regPass]="registradoPass()"
+    (onLoginSuccess)="sesionIniciada.set(true)"
+  />
+  } } } @if (!sesionIniciada() && registradoUser()) {
+  <p class="info">
+    Usuario registrado en memoria: <strong>{{ registradoUser() }}</strong>
+  </p>
+  }
+</div>

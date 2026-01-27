@@ -1,0 +1,28 @@
+<div class="card">
+  <h2>Crear Cuenta</h2>
+
+  <div class="field">
+    <label>Usuario:</label>
+    <input
+      [value]="user()"
+      (input)="user.set($any($event).target.value)"
+      placeholder="Mínimo 3 letras"
+    />
+    @if (userError()) { <small class="error">{{ userError() }}</small> }
+  </div>
+
+  <div class="field">
+    <label>Contraseña:</label>
+    <input
+      type="password"
+      [value]="pass()"
+      (input)="pass.set($any($event).target.value)"
+      placeholder="Mínimo 6 caracteres"
+    />
+    @if (passError()) { <small class="error">{{ passError() }}</small> }
+  </div>
+
+  <button [disabled]="!formValido()" (click)="enviarRegistro()">
+    Registrar y Guardar
+  </button>
+</div>
